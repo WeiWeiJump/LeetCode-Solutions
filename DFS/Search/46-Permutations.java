@@ -1,3 +1,9 @@
+/**
+ Name: Permutations
+ Number: 46
+ Tag: DFS/Search/Backtraking
+ Time Complexity: O(n!)
+ **/
 public class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
