@@ -1,7 +1,7 @@
 /**Name: N Queens
  * Number: 51
  * Tag: DFS/Backtraking
- * Root: 78.Subsets
+ * Root: 46.Permuations
  * Time Complexity: O(n!)
 **/
 
