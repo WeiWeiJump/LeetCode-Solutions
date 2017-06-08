@@ -21,10 +21,8 @@ public class Solution {
             res.add(new ArrayList<Integer>(combination));
             return;
         }
+        if (target < 0) return;
         for (int i = pos; i >= 0; i--) {
-            if (candidates[i] > target) {
-                continue;
-            }
             if (i != pos && candidates[i] == candidates[i + 1]) {
                 continue;
             }
