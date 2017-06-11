@@ -1,3 +1,8 @@
+/**Name: Minesweeper
+ * Number: 529
+ * Tag: DFS/BFS
+ * Time Complexty: O(n)
+**/
 public class Solution {
     public char[][] updateBoard(char[][] board, int[] click) {
         int m = board.length, n = board[0].length;
