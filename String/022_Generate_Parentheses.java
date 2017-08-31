@@ -3,7 +3,8 @@
  * Number: 22
  * Tag: DFS/Backtracking
  * Time Comlexity: O(2^n)
- * Main Point: Once we add a '(' we will then discard it and try a ')' which can only close a valid '('. How to keep valid: we can only add ‘(’ when the num of ‘(’ < n, we can only add ‘)’ when the num of ‘)’ < ‘(’.
+ * Main Point: Once we add a '(' we will then discard it and try a ')' which can only close a valid '('. 
+   How to keep valid: we can only add ‘(’ when the num of ‘(’ < n, we can only add ‘)’ when the num of ‘)’ < ‘(’.
 **/
 class Solution {
     public List<String> generateParenthesis(int n) {
