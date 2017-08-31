@@ -1,8 +1,9 @@
-me: Group Anagrams
+ /**
+ * Name: Group Anagrams
  * Number: 49
  * Tag: HashMap
  * Main Point: Anagrams will be the same if sorted in alphabetical order.
-   Take the sorted result as the key, and map the strings of the same key into a group.
+ * Take the sorted result as the key, and map the strings of the same key into a group.
  * Time Complexity: O(n * slogs) n: the number of strs, s: the max length of str
  * Space Complexity: O(n * s)
 **/
