@@ -3,24 +3,30 @@
  * Number: 22
  * Tag: DFS/Backtracking
  * Time Comlexity: O(2^n)
+ * Main Point: Once we add a '(' we will then discard it and try a ')' which can only close a valid '('. How to keep valid: we can only add ‘(’ when the num of ‘(’ < n, we can only add ‘)’ when the num of ‘)’ < ‘(’.
 **/
-public class Solution {
+class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> res = new ArrayList<>();
-        if (n < 0) return res;
-        DFSHelper(res, "", 0, 0, n);
+        if (n == 0) {
+            res.add("");
+            return res;
+        }
+        DFSHelper(new StringBuilder(), res, 0, 0, n);
         return res;
     }
-    private void DFSHelper(List<String> res, String temp, int open, int close, int max) {
-        if (temp.length() == max * 2) {
-            res.add(temp);
+    private void DFSHelper(StringBuilder parenthesis, List res, int left, int right, int n) {
+        if (parenthesis.length() == 2 * n) {
+            res.add(parenthesis.toString());
             return;
         }
-        if (open < max) {
-            DFSHelper(res, temp + '(', open + 1, close, max);
+        if (left < n) {
+            DFSHelper(parenthesis.append('('), res, left + 1, right, n);
+            parenthesis.deleteCharAt(parenthesis.length() - 1);
+        } 
+        if (right < left) {
+            DFSHelper(parenthesis.append(')'), res, left, right + 1, n);
+            parenthesis.deleteCharAt(parenthesis.length() - 1);
         }
-        if (close < open) {
-            DFSHelper(res, temp + ')', open, close + 1, max);
-        }
-    }
+    } 
 }
