@@ -2,7 +2,7 @@
  * Name: Ransom Note
  * Number: 383
  * Tag: String
- * Time Comlexity: O(magazine.lenth + ransomNote.len)
+ * Time Comlexity: O(magazine.lenth)
  * Space Complexity: O(1)
 **/
 class Solution {
