@@ -12,8 +12,8 @@
    Method2(Inorder Traversal): BST's inorder traversal is in ascending order.
    
  * Time Complexity: method1-Average-O(N), worst case O(N^2)(eg when the tree has only left subtree and the target is 1); 
-                    method2-
- * Space Complexity: method1-O(N); method2-
+                    method2-O(k)
+ * Space Complexity: method1-O(N); method2-O(k)
 **/
 
 /**
