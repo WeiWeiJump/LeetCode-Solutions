@@ -56,6 +56,8 @@ class Solution {
  * (2) Heap: 
    1.Build a minHeap of elements from the first row.
    2.Do the following operations k-1 times: Every time when you poll out the root(Top Element in Heap), you need to know the row number and column number of that element(so we can create a tuple class here), replace that root with the next element from the same column. Therefore, we keep adding current min value from those points not in the heap, and we poll out the points in an increasing order of their value.
+   Time Complexity: O(matrix.length + klog(matrix.length))
+   Space Complexity: O(matrix.length)
 **/ 
 class Solution {
     public int kthSmallest(int[][] matrix, int k) {
