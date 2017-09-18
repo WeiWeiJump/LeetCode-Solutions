@@ -3,8 +3,12 @@
  * Number: 98
  * Tag: BST/DFS
  * Main Points:
-   (d&c method) BST(root) is valid when BST(root.left) and BST(root.right) is valid && left tree's max num <= root && right tree's min num >= root. so we need to pass the max value and the min value to next level. base case: BST(null) = valid.
+   (d&c method) BST(root) is valid if: 
+   BST(root.left) and BST(root.right) is valid && left tree's max num <= root && right tree's min num >= root. 
+   so we need to pass the max value and the min value to next level. base case: BST(null) = valid.
    (iterative method) inorder traversal, a valid BST's inorder travel should be in ascending order.
+ * Time Complexity: O(n) (n is the number of nodes in the tree)
+ * Space Complexity: O(n)
 **/
 
 /**
