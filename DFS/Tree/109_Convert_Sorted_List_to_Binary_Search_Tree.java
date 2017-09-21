@@ -5,7 +5,7 @@
  * Main Point: similar with 108. 
    The trick is we use 2 pointers to find the mid of the linkedlist
    and then recursively build the tree like 108.
- * Time Complexity: O(logn)
+ * Time Complexity: O(nlogn)
  * Space Complexity: O(logn)
 **/
 /**
