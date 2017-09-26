@@ -1,7 +1,12 @@
-/**Name: Clone Graph
+/**
+ * Name: Clone Graph
  * Number: 133
- * Tag: BFS
+ * Tag: BFS/Graph
+ * Main Points: 
+   use hashmap to store current node as a key, and its deep copy as value.
+   BFS from current node to its neighbor, level by level to connect the deep copied node.
  * Time Complexity: O(n)
+ * Space Complexity: O(n)
 **/
 /**
  * Definition for undirected graph.
@@ -13,29 +18,29 @@
  */
 public class Solution {
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-        if (node == null) return node;
-        
-        List<UndirectedGraphNode> nodes = new ArrayList<>();
+        if (node == null) return null;
         HashMap<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+        Queue<UndirectedGraphNode> queue = new LinkedList<>();
+        queue.offer(node);
         
-        nodes.add(node);
-        map.put(node, new UndirectedGraphNode(node.label));
-        
-        //clone nodes and edges
-        int start = 0;
-        for (int i = 0; i < nodes.size(); i++) {
-            UndirectedGraphNode oldNode = nodes.get(i);
-            UndirectedGraphNode newNode = map.get(oldNode);
-            for (int j = 0; j < oldNode.neighbors.size(); j++) {
-                UndirectedGraphNode oldNeighbor = oldNode.neighbors.get(j);
-                if (!map.containsKey(oldNeighbor)) {
-                map.put(oldNeighbor, new UndirectedGraphNode(oldNeighbor.label));
-                nodes.add(oldNeighbor);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < queue.size(); i++) {
+                UndirectedGraphNode curNode = queue.poll();
+                // clone current node
+                if (!map.containsKey(curNode)) {
+                    map.put(curNode, new UndirectedGraphNode(curNode.label));
                 }
-                newNode.neighbors.add(map.get(oldNeighbor));
-            }
+                // clone its neighbors ans the relationship
+                for (UndirectedGraphNode neighbor : curNode.neighbors) {       
+                    if (!map.containsKey(neighbor)) {
+                        map.put(neighbor, new UndirectedGraphNode(neighbor.label));
+                        queue.offer(neighbor);
+                    }
+                    map.get(curNode).neighbors.add(map.get(neighbor));
+                } 
+            } 
         }
-        
         return map.get(node);
     }
 }
