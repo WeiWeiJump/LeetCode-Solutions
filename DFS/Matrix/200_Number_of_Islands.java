@@ -1,42 +1,37 @@
-/**Name: NumberOfIslands
+/**
+ * Name: Number of Islands
  * Number: 200
  * Tag: DFS
- * Time Complexity: O(n) (n is the number of matrix)
+ * Main Points: 
+   DFS in 4 direction, all visited area should be marked.
+   First I used boolean[][] to store whether it's visited.
+   In fact we can save space by change every visited island to water.
+ * Time Comlexity: O(row * column)
+ * Space Complexity: Worst O(row * column)
 **/
-public class Solution {
-
-    int count = 0;
-    int[] rDir = {-1, 0, 1, 0};
-    int[] cDir = {0, -1, 0, 1};
+class Solution {
     public int numIslands(char[][] grid) {
         if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
-        
-        int row = grid.length;
-        int column = grid[0].length;
-        boolean[][] visited = new boolean[row][column];
-        
-        for (int r = 0; r < row; r++) {
-            for (int c = 0 ; c < column; c++) {
-                if (grid[r][c] == '1' && !visited[r][c]) {
-                    explore(grid, row, column, r , c, visited);
+        //boolean[][] visited = new boolean[row][column];
+        int count = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '1') {
+                    explore(grid, i, j);
                     count++;
                 }
             }
         }
         return count;
     }
-    private void explore(char[][] grid, int row, int column, int r, int c, boolean[][] visited) {
-        if (!shouldExplore(grid, row, column, r, c, visited)) {
+    private void explore(char[][] grid, int i, int j) {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '0') {
             return;
         }
-        visited[r][c] = true;
-        for (int i = 0; i < 4; i++) {
-            explore(grid, row, column, r + rDir[i], c + cDir[i], visited);
-        }
+        grid[i][j] = '0';
+        explore(grid, i - 1, j);
+        explore(grid, i + 1, j);
+        explore(grid, i, j - 1);
+        explore(grid, i, j + 1);        
     }
-    private boolean shouldExplore(char[][] grid, int row, int column, int r, int c, boolean[][] visited) {
-        if (r >= 0 && r < row && c >= 0 && c < column && grid[r][c] == '1' && !visited[r][c]) {
-            return true;
-        }
-        return false;
-    }
+}
