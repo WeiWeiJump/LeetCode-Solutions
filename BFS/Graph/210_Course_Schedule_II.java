@@ -1,50 +1,50 @@
 /**
- * Name: Course Schedule II 
+ * Name: Course Schedule II
  * Number: 210
- * Tag: Topological Sorting
- * Time Complexity: O(V + E)
+ * Tag: Topological Sorting/BFS
+ * Main Points: same as 207
+ * Time Complexity: O(V+E)
+ * Space Complexity: O(V+E)
 **/
-public class Solution {
+class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        if (numCourses == 0) return null;
-        
-        List<Integer> order = new ArrayList<>();
+        List<Integer>[] nextOfCourse = new List[numCourses];
         int[] indegree = new int[numCourses];
-        List<Integer>[] preCanGo = new List[numCourses];
-        
-        //initialize the relationship list
+        List<Integer> res = new ArrayList<>();
+        //initialize
         for (int i = 0; i < numCourses; i++) {
-            preCanGo[i] = new LinkedList<Integer>();
+            nextOfCourse[i] = new ArrayList<Integer>();
         }
-        //calculate indegrees of all nodes
-        for (int[] preCourse: prerequisites) {
-            indegree[preCourse[0]]++;
-            preCanGo[preCourse[1]].add(preCourse[0]);
+        //construct the map from prerequisite to curCourse
+        for (int[] prerequisite: prerequisites) {
+            nextOfCourse[prerequisite[1]].add(prerequisite[0]);
+            indegree[prerequisite[0]]++;
         }
-        //put all 0-indegree nodes into the queue
+        //BFS
         Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0 ; i < numCourses; i++) {
+        for (int i = 0; i < numCourses; i++) {
             if (indegree[i] == 0) {
-                queue.add(i);
+                queue.offer(i);
             }
         }
-        //BFS all 0-indegree nodes
         while (!queue.isEmpty()) {
             int curCourse = queue.poll();
-            order.add(curCourse);
-            for (int goCourse: preCanGo[curCourse]) {
-                indegree[goCourse]--;
-                if (indegree[goCourse] == 0) {
-                    queue.add(goCourse);
+            res.add(curCourse);
+            List<Integer> nextCourses =  nextOfCourse[curCourse];
+            for (int nextCourse : nextCourses) {
+                if (--indegree[nextCourse] == 0) {
+                    queue.offer(nextCourse);
                 }
             }
         }
-        //copy the list to array
-        int[] res = new int[order.size()];
-        for (int i = 0; i < order.size(); i++) {
-            res[i] = order.get(i);
+        //turn list to int[]
+        int[] ret = new int[numCourses];
+        if (res.size() == numCourses) {
+            for (int i = 0; i < numCourses; i++) {
+                ret[i] = res.get(i);
+            }
+            return ret;
         }
-        if (res.length != numCourses) return new int[]{};
-        else return res;    
+        return new int[0];
     }
 }
