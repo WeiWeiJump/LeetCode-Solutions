@@ -1,48 +1,46 @@
 /**
  * Name: Course Schedule
  * Number: 207
- * Tag: Topological Sorting/BFS
- * Time Complexity: O(V + E) (using list to save neighbors of each node)
- * if we use matrix to save their relationship, TC will be O(V^2 + E) 
+ * Tag: Topological Sorting + BFS/DFS
+ * Main Points:
+   first we build the index map, key is the current course, value is its prerequisite.
+   Then use topological sorting to decide whether it's valid.
+ * Time Complexity: O(V+E)
+ * Space Complexity: O(V+E)
 **/
-public class Solution {
-    public boolean canFinish(int numCourses, int[][] prerequisites) {        
-        if (numCourses == 0) return true;
-        if (prerequisites == null || prerequisites.length == 0) return true;
-        
-        int[] indegree = new int[numCourses]; // to save indegrees of all nodes
-        List<Integer>[] preCanGo = new List[numCourses]; // tp save neighbors of each node for more easily scanning
-        
-        //initialize neighbors of each node 
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<Integer>[] nextOfCourse = new List[numCourses];
+        int[] indegree = new int[numCourses];
+        //initialize
+        //O(V)
         for (int i = 0; i < numCourses; i++) {
-            preCanGo[i] = new LinkedList<Integer>();
+            nextOfCourse[i] = new ArrayList<Integer>();
         }
-        //calculate indegrees of all nodes
-        for (int[] pair: prerequisites) {
-            int ready = pair[0];
-            int pre = pair[1];
-            indegree[ready]++;
-            preCanGo[pre].add(ready);
+        //construct the map of prerequisite and course, record every node's indegree
+        //O(E)
+        for (int[] prerequisite : prerequisites) {
+            nextOfCourse[prerequisite[1]].add(prerequisite[0]);
+            indegree[prerequisite[0]]++;
         }
-        //put all 0-indegree nodes into the queue
+        //BFS curLevel we should visit nodes whose indegree = 0
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < numCourses; i++) {
-            if(indegree[i] == 0) {
+            if (indegree[i] == 0) {
                 queue.offer(i);
             }
         }
-        //delete current node and its edge, loop
-        int count = 0;
+        //O(V)
+        int visitedCourse = 0;
         while (!queue.isEmpty()) {
             int curCourse = queue.poll();
-            count++;
-            for (int neighbor: preCanGo[curCourse]) {
-                indegree[neighbor]--;
-                if (indegree[neighbor] == 0) {
-                    queue.offer(neighbor);
+            for (int nextCourse : nextOfCourse[curCourse]) {
+                if(--indegree[nextCourse] == 0) {
+                    queue.offer(nextCourse);
                 }
             }
+            visitedCourse++;
         }
-        return count == numCourses;
+        return visitedCourse == numCourses;
     }
 }
