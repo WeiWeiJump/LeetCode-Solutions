@@ -1,37 +1,38 @@
 /**
- Name: Permutations
- Number: 46
- Tag: DFS/Search/Backtraking
- Time Complexity: O(n!)
- **/
-public class Solution {
+ * Name: Permutations
+ * Number: 46
+ * Tag: DFS/Search
+ * Main Points: 
+    1. build recursion tree
+    2. in order to avoid the element that already appeared in permutation
+       use LinkedList.contains() method
+ * Time Complexity: O(n!)
+ * Space Complexity: O(n)
+**/
+class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
-        if (nums == null) {
-            return res;
-        }
-        if (nums.length == 0) {
+        List<Integer> permutation = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
             res.add(new ArrayList<Integer>());
             return res;
         }
-        List<Integer> tempList = new ArrayList<>();
-        search(nums, res, tempList);
+        dfsHelper(nums, permutation, res);
         return res;
     }
-    
-    private void search(int[] nums, List<List<Integer>> res, List<Integer> tempList) {
-        if (tempList.size() == nums.length) {
-            res.add(new ArrayList<Integer>(tempList)); // pay attention
+    //1. 找到所有以permutation里存的东西开头的排列 
+    private void dfsHelper(int[] nums, List<Integer> permutation, List res) {
+        if (permutation.size() == nums.length) {
+            res.add(new ArrayList<Integer>(permutation));
             return;
         }
-        
-        for (int i : nums) {
-            if (tempList.contains(i)) {
+        for (int i = 0; i < nums.length; i++) {
+            if (permutation.contains(nums[i])) {
                 continue;
             }
-            tempList.add(i);
-            search(nums, res, tempList);
-            tempList.remove(tempList.size() - 1);
+            permutation.add(nums[i]);
+            dfsHelper(nums, permutation, res);
+            permutation.remove(permutation.size() - 1);
         }
     }
 }
