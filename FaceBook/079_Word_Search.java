@@ -3,7 +3,7 @@
  * Number: 79
  * Tag: DFS
  * Main Points: pay attention to reset visited flag
- * Time Complexity: O(4^word.length)
+ * Time Complexity: O(m*n*4^min(m*n, word.length))
  * Space Complexity: O(board.length * board[0].length)
 **/
 class Solution {
