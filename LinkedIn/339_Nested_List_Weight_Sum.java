@@ -36,13 +36,13 @@ class Solution {
         if (nestedList == null || nestedList.size() == 0) return 0;
         return depthHelper(nestedList, 1);
     }
-    private int depthHelper(List<NestedInteger> nestedList, int depth) {
+    private int depthHelper(List<NestedInteger> nestedList, int level) {
         int depth = 0;
         for (NestedInteger ni : nestedList) {
             if (ni.isInteger()) {
-                depth += ni.getInteger() * depth;
+                depth += ni.getInteger() * level;
             } else {
-                depth += depthHelper(nestedList, depth + 1);
+                depth += depthHelper(ni.getList(), level + 1);
             }
         }
         return depth;
