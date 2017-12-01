@@ -1,0 +1,25 @@
+1. story why I want to do project: I like online shopping, but not always can I get most suitable things appearing in the top of the search list
+2. Ads - Step: (1) data, learn how to crawl data from amazon, store on a cache (2)use these data to let users search conveniently for these product (3)user experience, I implemented some machine learning algorithm to show users more relevant ads.
+using machine learning algorithms:
+1. we need to rewrite query. nike running shoes -> nike sneakers
+query rewrite to get more relevant query
+1000 product data -> title，query，category，campaign id，price，image url，cost per click，query group，key word，ad id, detailed url
+extract "query and title", using lucene libray functions to clean
+training data: these query and title pairs
+word2vector
+output: a model (a single vector containnig, for every input word, the probability that each word would appear near the input word)
+
+2.we need to predict user's click probility towards an ad
+we don't have user's search log, so I simulate a log by myself
+taking many factors into consideration, some relevant to users, some to ads, for example, user ID, group ID, compaign ID
+then I used 7-10 features to do offline training
+here I use logistic regression to train a model, to get every feature's weight
+
+then if user click online, combine users and ads to get features and use my model to calculate their click probability
+then rank these ads according user's click probability
+
+/****************************************************************************************************************************/
+inverted index：
+    key是term
+    value 是List<Id>
+    给一个ad，把里面的keyword tokenize，然后把里面每个term拿出来。并且找到对应的ad id，然后插入到这个term的list里面。inverted index需要使用memcache
